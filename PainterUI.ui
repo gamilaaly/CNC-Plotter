@@ -6,107 +6,79 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>345</height>
+    <width>792</width>
+    <height>336</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Paint Application</string>
   </property>
-  <widget class="QWidget" name="centralwidget">
-   <widget class="QPushButton" name="rectangleBtn">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>140</y>
-      <width>89</width>
-      <height>25</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Rectangle</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="lineBtn">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>190</y>
-      <width>89</width>
-      <height>25</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Line</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="circlrBtn">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>240</y>
-      <width>89</width>
-      <height>25</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Circle</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="stopBtn">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>90</y>
-      <width>89</width>
-      <height>25</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>STOP</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="startBtn">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>40</y>
-      <width>89</width>
-      <height>25</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>START</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label">
-    <property name="geometry">
-     <rect>
-      <x>126</x>
-      <y>16</y>
-      <width>651</width>
-      <height>251</height>
-     </rect>
-    </property>
-    <property name="autoFillBackground">
-     <bool>true</bool>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
-  </widget>
+  <widget class="QWidget" name="centralwidget"/>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>792</width>
      <height>22</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuCanvas">
+    <property name="title">
+     <string>CANVAS</string>
+    </property>
+    <addaction name="actionCLEAR"/>
+   </widget>
+   <widget class="QMenu" name="menuSHAPE">
+    <property name="title">
+     <string>SHAPE</string>
+    </property>
+    <addaction name="actionLINE"/>
+    <addaction name="actionRECTANGLE"/>
+    <addaction name="actionCIRCLE"/>
+   </widget>
+   <widget class="QMenu" name="menuPLOTTER">
+    <property name="title">
+     <string>PLOTTER</string>
+    </property>
+    <addaction name="actionSTART"/>
+    <addaction name="actionSTOP"/>
+   </widget>
+   <addaction name="menuCanvas"/>
+   <addaction name="menuSHAPE"/>
+   <addaction name="menuPLOTTER"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionCLEAR">
+   <property name="text">
+    <string>CLEAR</string>
+   </property>
+  </action>
+  <action name="actionLINE">
+   <property name="text">
+    <string>LINE</string>
+   </property>
+  </action>
+  <action name="actionRECTANGLE">
+   <property name="text">
+    <string>RECTANGLE</string>
+   </property>
+  </action>
+  <action name="actionCIRCLE">
+   <property name="text">
+    <string>CIRCLE</string>
+   </property>
+  </action>
+  <action name="actionSTART">
+   <property name="text">
+    <string>START</string>
+   </property>
+  </action>
+  <action name="actionSTOP">
+   <property name="text">
+    <string>STOP</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>
