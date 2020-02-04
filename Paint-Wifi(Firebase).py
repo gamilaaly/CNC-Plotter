@@ -7,13 +7,13 @@ import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import db
 
-# Fetch the service account key JSON file contents
-# cred = credentials.Certificate('privateKey.json')
-#
-#
-# # Initialize the app with a service account, granting admin privileges
-# firebase_admin.initialize_app(cred, {'databaseURL': 'https://cnc-plotter-17855.firebaseio.com/'})
-# control = db.reference()
+#Fetch the service account key JSON file contents
+cred = credentials.Certificate(r"C:\Users\Gamila\Documents\GitHub\CNC-Plotter\key.json")
+
+
+# Initialize the app with a service account, granting admin privileges
+firebase_admin.initialize_app(cred, {'databaseURL': 'https://cnc-plotter-17855.firebaseio.com/'})
+control = db.reference()
 
 
 class ApplicationWindow(QtWidgets.QMainWindow):
@@ -54,28 +54,28 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         if self.selectedShape == "LINE":
             painter.drawLine(self.first_x, self.first_y, self.last_x, self.last_y)
-            # control.update({'control/parameters/p1/p11': self.first_x})
-            # control.update({'control/parameters/p1/p12': self.first_y})
-            # control.update({'control/parameters/p2/p21': self.last_x})
-            # control.update({'control/parameters/p2/p22': self.last_y})
+            control.update({'control/parameters/p1/p11': self.first_x})
+            control.update({'control/parameters/p1/p12': self.first_y})
+            control.update({'control/parameters/p2/p21': self.last_x})
+            control.update({'control/parameters/p2/p22': self.last_y})
 
         if self.selectedShape == "RECTANGLE":
             w = self.last_x - self.first_x
             h = self.last_y - self.first_y
             painter.drawRect(self.first_x, self.first_y, w, h)
-            # control.update({'control/parameters/p1/p11': self.first_x})
-            # control.update({'control/parameters/p1/p12': self.first_y})
-            # control.update({'control/parameters/p2/p21': h})
-            # control.update({'control/parameters/p2/p22': w})
+            control.update({'control/parameters/p1/p11': self.first_x})
+            control.update({'control/parameters/p1/p12': self.first_y})
+            control.update({'control/parameters/p2/p21': h})
+            control.update({'control/parameters/p2/p22': w})
 
         if self.selectedShape == "CIRCLE":
             w = self.last_x - self.first_x
             h = self.last_y - self.first_y
             painter.drawEllipse(self.first_x, self.first_y, h, h)
-            # control.update({'control/parameters/p1/p11': self.first_x})
-            # control.update({'control/parameters/p1/p12': self.first_y})
-            # control.update({'control/parameters/p2/p21': h})
-            # control.update({'control/parameters/p2/p22': h})
+            control.update({'control/parameters/p1/p11': self.first_x})
+            control.update({'control/parameters/p1/p12': self.first_y})
+            control.update({'control/parameters/p2/p21': h})
+            control.update({'control/parameters/p2/p22': h})
 
         print(self.first_x)
         print(self.first_y)
