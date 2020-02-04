@@ -6,12 +6,16 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>792</width>
-    <height>336</height>
+    <width>800</width>
+    <height>400</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Paint Application</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>Icons/paint.png</normaloff>Icons/paint.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget"/>
   <widget class="QMenuBar" name="menubar">
@@ -19,19 +23,27 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>792</width>
-     <height>22</height>
+     <width>800</width>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuCanvas">
     <property name="title">
      <string>CANVAS</string>
     </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>Icons/canvas.png</normaloff>Icons/canvas.png</iconset>
+    </property>
     <addaction name="actionCLEAR"/>
    </widget>
    <widget class="QMenu" name="menuSHAPE">
     <property name="title">
      <string>SHAPE</string>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>Icons/shapes.png</normaloff>Icons/shapes.png</iconset>
     </property>
     <addaction name="actionLINE"/>
     <addaction name="actionRECTANGLE"/>
@@ -40,6 +52,10 @@
    <widget class="QMenu" name="menuPLOTTER">
     <property name="title">
      <string>PLOTTER</string>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>Icons/cnc.png</normaloff>Icons/cnc.png</iconset>
     </property>
     <addaction name="actionSTART"/>
     <addaction name="actionSTOP"/>
@@ -50,31 +66,55 @@
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionCLEAR">
+   <property name="icon">
+    <iconset>
+     <normaloff>Icons/erase.png</normaloff>Icons/erase.png</iconset>
+   </property>
    <property name="text">
     <string>CLEAR</string>
    </property>
   </action>
   <action name="actionLINE">
+   <property name="icon">
+    <iconset>
+     <normaloff>Icons/diagonal-line.png</normaloff>Icons/diagonal-line.png</iconset>
+   </property>
    <property name="text">
     <string>LINE</string>
    </property>
   </action>
   <action name="actionRECTANGLE">
+   <property name="icon">
+    <iconset>
+     <normaloff>Icons/rectangle.png</normaloff>Icons/rectangle.png</iconset>
+   </property>
    <property name="text">
     <string>RECTANGLE</string>
    </property>
   </action>
   <action name="actionCIRCLE">
+   <property name="icon">
+    <iconset>
+     <normaloff>Icons/dot.png</normaloff>Icons/dot.png</iconset>
+   </property>
    <property name="text">
     <string>CIRCLE</string>
    </property>
   </action>
   <action name="actionSTART">
+   <property name="icon">
+    <iconset>
+     <normaloff>Icons/start.png</normaloff>Icons/start.png</iconset>
+   </property>
    <property name="text">
     <string>START</string>
    </property>
   </action>
   <action name="actionSTOP">
+   <property name="icon">
+    <iconset>
+     <normaloff>Icons/stop.png</normaloff>Icons/stop.png</iconset>
+   </property>
    <property name="text">
     <string>STOP</string>
    </property>

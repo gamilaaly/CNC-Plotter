@@ -1,45 +1,37 @@
-from PyQt5.QtGui import QImage, QPainter, QIcon
+from PyQt5.QtGui import QImage, QPainter
 from PainterUI import Ui_MainWindow
 import sys
 from PyQt5 import QtGui, QtWidgets
-from PyQt5.QtCore import Qt
-import firebase_admin
-from firebase_admin import credentials
-from firebase_admin import db
-
-# Fetch the service account key JSON file contents
-# cred = credentials.Certificate('privateKey.json')
-#
-#
-# # Initialize the app with a service account, granting admin privileges
-# firebase_admin.initialize_app(cred, {'databaseURL': 'https://cnc-plotter-17855.firebaseio.com/'})
-# control = db.reference()
+from PyQt5.QtCore import Qt, QSize
+import serial
+import time
 
 
 class ApplicationWindow(QtWidgets.QMainWindow):
 
     def __init__(self):
+
         super(ApplicationWindow, self).__init__()
         self.ui = Ui_MainWindow()
-        self.setWindowIcon(QIcon('Icons/paint.png'))
+        app_icon = QtGui.QIcon()
+        app_icon.addFile('Icons/paint.png', QSize(64, 64))
+        self.setWindowIcon(app_icon)
         self.ui.setupUi(self)
         self.first_x, self.first_y = None, None
         self.last_x, self.last_y = None, None
         self.image = QImage(self.size(), QImage.Format_RGB32)
         self.image.fill(Qt.white)
         self.selectedShape = None
-        self.ui.actionLINE.setIcon(QIcon('Icons/diagonal-line.png'))
-        self.ui.actionCIRCLE.setIcon(QIcon('Icons/dot.png'))
-        self.ui.actionRECTANGLE.setIcon(QIcon('Icons/rectangle.png'))
-        self.ui.actionCLEAR.setIcon(QIcon('Icons/erase.png'))
-        self.ui.actionSTART.setIcon(QIcon('Icons/start.png'))
-        self.ui.actionSTOP.setIcon(QIcon('Icons/stop.png'))
         self.ui.actionCLEAR.triggered.connect(self.clear)
         self.ui.actionCIRCLE.triggered.connect(self.drawCIRCLE)
         self.ui.actionLINE.triggered.connect(self.drawLINE)
         self.ui.actionRECTANGLE.triggered.connect(self.drawRECTANGLE)
         self.ui.actionSTOP.triggered.connect(self.stop)
         self.ui.actionSTART.triggered.connect(self.start)
+
+        # Bluetooth part
+        #self.s = serial.Serial('COM11', 9600, timeout=1)  # choose the outgoing one
+        print("connected!")
 
     def mousePressEvent(self, e):
         self.first_x = e.x()
@@ -54,28 +46,31 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         if self.selectedShape == "LINE":
             painter.drawLine(self.first_x, self.first_y, self.last_x, self.last_y)
-            # control.update({'control/parameters/p1/p11': self.first_x})
-            # control.update({'control/parameters/p1/p12': self.first_y})
-            # control.update({'control/parameters/p2/p21': self.last_x})
-            # control.update({'control/parameters/p2/p22': self.last_y})
+            self.first_x = str(self.first_x)
+            self.first_y = str(self.first_y)
+            self.last_x = str(self.last_x)
+            self.last_y = str(self.last_y)
+            self.s.write(
+                bytes("/" + "L" + "," + self.first_x + "," + self.first_y + "," + self.last_x + "," + self.last_y , 'UTF-8'))
 
         if self.selectedShape == "RECTANGLE":
             w = self.last_x - self.first_x
             h = self.last_y - self.first_y
             painter.drawRect(self.first_x, self.first_y, w, h)
-            # control.update({'control/parameters/p1/p11': self.first_x})
-            # control.update({'control/parameters/p1/p12': self.first_y})
-            # control.update({'control/parameters/p2/p21': h})
-            # control.update({'control/parameters/p2/p22': w})
+            self.first_x = str(self.first_x)
+            self.first_y = str(self.first_y)
+            w = str(w)
+            h = str(h)
+            self.s.write(bytes("/" + "R" + "," + self.first_x + "," + self.first_y + "," + w + "," + h , 'UTF-8'))
 
         if self.selectedShape == "CIRCLE":
             w = self.last_x - self.first_x
             h = self.last_y - self.first_y
             painter.drawEllipse(self.first_x, self.first_y, h, h)
-            # control.update({'control/parameters/p1/p11': self.first_x})
-            # control.update({'control/parameters/p1/p12': self.first_y})
-            # control.update({'control/parameters/p2/p21': h})
-            # control.update({'control/parameters/p2/p22': h})
+            self.first_x = str(self.first_x)
+            self.first_y = str(self.first_y)
+            h = str(h)
+            self.s.write(bytes("/" + "C" + "," + self.first_x + "," + self.first_y + "," + h + "," + h , 'UTF-8'))
 
         print(self.first_x)
         print(self.first_y)
@@ -90,25 +85,24 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.ui.actionSTART.setText("START")
 
     def stop(self):
-        control.update({'control/on': 0})
         print("stop")
+        self.s.write(bytes("off", 'UTF-8'))
 
     def start(self):
-        control.update({'control/on': 1})
         self.ui.actionSTART.setText("RESUME")
         print("start")
+        self.s.write(bytes("on", 'UTF-8'))
+
+
 
     def drawRECTANGLE(self):
-        control.update({'control/shape': "R"})
         self.selectedShape = "RECTANGLE"
 
     def drawLINE(self):
         self.selectedShape = "LINE"
-        control.update({'control/shape': "L"})
 
     def drawCIRCLE(self):
         self.selectedShape = "CIRCLE"
-        control.update({'control/shape': "C"})
 
     def paintEvent(self, event):
         canvasPainter = QPainter(self)
@@ -133,7 +127,7 @@ def main():
                      border-color: darkblue;
                     background: rgba(153, 0, 153, 150);
                 }
-                
+
              """)
     application.show()
     sys.exit(app.exec_())
